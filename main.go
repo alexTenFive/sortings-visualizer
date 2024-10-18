@@ -16,8 +16,8 @@ import (
 	"golang.org/x/image/font/basicfont"
 )
 
-const winHeight = 768
-const winWidth = 1524
+const winHeight = 1080
+const winWidth = 1920
 
 const shapeWidth = 2.5
 const shapeHeightRatio = 2.5
@@ -149,7 +149,7 @@ func (s *IntSlice) heapify(n, i int) {
 
 func run() {
 	cfg := pixelgl.WindowConfig{
-		Title:  "Pixel Animation",
+		Title:  "Sorting Visualization Program",
 		Bounds: pixel.R(0, 0, winWidth, winHeight),
 		VSync:  true,
 	}
