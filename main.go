@@ -196,7 +196,7 @@ func run() {
 		close(timeStop)
 	}()
 
-	shaper := newShaper(imdraw.New(nil), 5, 5, colornames.White, colornames.Blanchedalmond)
+	shaper := newShaper(imdraw.New(nil), 5, 5, colornames.White, colornames.Darkcyan)
 
 	basicAtlas := text.NewAtlas(basicfont.Face7x13, text.ASCII)
 	basicTxt := text.New(pixel.V(5, winHeight-20), basicAtlas)
