@@ -301,7 +301,7 @@ func (s *shaper) drawShape(value int, targeted bool) {
 	s.startPositionX = s.startPositionX + shapePadding + shapeWidth
 }
 
-var sortType = flag.String("sort", "default", "[quick, bubble, selection, insertion, heap, shell, default]")
+var sortType = flag.String("sort", "quick", "[quick, bubble, selection, insertion, heap, shell, default]")
 var itemsCount = flag.Int("items", 100, "Items count")
 
 func main() {
