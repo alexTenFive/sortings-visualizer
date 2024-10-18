@@ -19,8 +19,8 @@ import (
 const winHeight = 1080
 const winWidth = 1920
 
-const shapeWidth = 2.5
-const shapeHeightRatio = 2.5
+const shapeWidth = 10
+const shapeHeightRatio = 5
 const shapePadding = 1
 
 // IntSlice is a type that implements the sort.Interface for a slice of integers.
@@ -51,8 +51,8 @@ func (s *IntSlice) BubbleSort() {
 	n := len(s.values)
 	for i := 0; i < n-1; i++ {
 		for j := 0; j < n-i-1; j++ {
-			if s.values[j] > s.values[j+1] {
-				s.Swap(j, j+1)
+			if s.Less(j+1, j) { // Using Less to compare values
+				s.Swap(j, j+1) // Call Swap to swap elements
 			}
 		}
 	}
@@ -196,7 +196,7 @@ func run() {
 		close(timeStop)
 	}()
 
-	shaper := newShaper(imdraw.New(nil), 2.5, 2.5, colornames.White, colornames.Red)
+	shaper := newShaper(imdraw.New(nil), 5, 5, colornames.White, colornames.Azure)
 
 	basicAtlas := text.NewAtlas(basicfont.Face7x13, text.ASCII)
 	basicTxt := text.New(pixel.V(5, winHeight-20), basicAtlas)
