@@ -1,49 +1,88 @@
 # Sorting Visualization Program
 
-This is a Go program that visualizes different sorting algorithms using the Pixel library. The visualization shows the process of sorting a list of integers using various sorting algorithms.
+This program visualizes various sorting algorithms using the [Pixel](https://github.com/faiface/pixel) graphics library in Go. It allows users to see the step-by-step execution of different sorting algorithms on randomly generated lists of integers.
 
 ## Features
 
-- Supports multiple sorting algorithms: Quick Sort, Bubble Sort, Selection Sort, Insertion Sort, Heap Sort, and Shell Sort.
-- Visualizes the sorting process in real-time.
-- Displays the elapsed time taken by the sorting algorithm.
+- Implements the following sorting algorithms:
+  - Bubble Sort
+  - Selection Sort
+  - Insertion Sort
+  - Shell Sort
+  - Quick Sort
+  - Heap Sort
+- Visual representation of sorting steps.
+- Adjustable number of items to sort.
+- Command-line options to select the sorting algorithm.
 
-## Prerequisites
+## Requirements
 
-- Go 1.16 or higher
-- Pixel library
-- x/image package
+- Go 1.15 or later
+- Pixel library for graphics
+- Go modules
 
 ## Installation
 
-1. **Install Go**: If you don't have Go installed, download and install it from [here](https://golang.org/dl/).
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/sorting-visualization.git
+   cd sorting-visualization
+   ```
 
-2. **Get the required packages**:
-    ```sh
-    go get github.com/faiface/pixel
-    go get golang.org/x/image/colornames
-    go get golang.org/x/image/font/basicfont
-    ```
+2. Install the required dependencies:
+   ```bash
+   go mod tidy
+   ```
 
 ## Usage
 
-1. **Clone the repository**:
-    ```sh
-    git clone <repository_url>
-    cd <repository_directory>
-    ```
+Run the program with the following command:
 
-2. **Build and run the program**:
-    ```sh
-    go run main.go --sort=<algorithm> --items=<number_of_items>
-    ```
+```bash
+go run main.go -sort=<algorithm> -items=<count>
+```
 
-    Replace `<algorithm>` with one of the following options: `quick`, `bubble`, `selection`, `insertion`, `heap`, `shell`, or `default`.
+### Command-Line Flags
 
-    Replace `<number_of_items>` with the number of items to sort.
+- `-sort`: Choose the sorting algorithm to use. Available options:
+  - `quick` (default)
+  - `bubble`
+  - `selection`
+  - `insertion`
+  - `heap`
+  - `shell`
+  - `default` (Go's built-in sort)
+  
+- `-items`: Set the number of items to sort (default is 100).
 
-## Example
+### Example
 
-To run the program with Quick Sort and 150 items:
-```sh
-go run main.go --sort=quick --items=150
+To run the program using Bubble Sort with 50 items:
+
+```bash
+go run main.go -sort=bubble -items=50
+```
+
+## Visuals
+
+The program creates a window that displays the sorting process. Each integer is represented as a bar, and the color changes to indicate which elements are currently being compared and swapped. The elapsed time for sorting is displayed at the bottom of the window.
+
+## Code Structure
+
+- `IntSlice`: A type that implements the `sort.Interface` for sorting integers.
+- Sorting algorithms:
+  - `BubbleSort`: Implements bubble sort.
+  - `SelectionSort`: Implements selection sort.
+  - `InsertionSort`: Implements insertion sort.
+  - `ShellSort`: Implements shell sort.
+  - `QuickSort`: Implements quick sort.
+  - `HeapSort`: Implements heap sort.
+- `shaper`: A utility for drawing the visual representation of the sorting process.
+
+## Contributing
+
+Feel free to fork the repository and submit pull requests for improvements or additional features!
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
