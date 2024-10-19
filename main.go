@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"image/color"
 	"math/rand"
+	"os"
 	"sort"
 	"time"
 
@@ -19,8 +20,6 @@ import (
 const winHeight = 1080
 const winWidth = 1920
 
-const shapeWidth = 10
-const shapeHeightRatio = 5
 const shapePadding = 1
 
 // IntSlice is a type that implements the sort.Interface for a slice of integers.
@@ -153,6 +152,7 @@ func run() {
 		Bounds: pixel.R(0, 0, winWidth, winHeight),
 		VSync:  true,
 	}
+
 	win, err := pixelgl.NewWindow(cfg)
 	if err != nil {
 		panic(err)
@@ -196,7 +196,7 @@ func run() {
 		close(timeStop)
 	}()
 
-	shaper := newShaper(imdraw.New(nil), 5, 5, colornames.White, colornames.Darkcyan)
+	shaper := newShaper(imdraw.New(nil), shapeWidth, shapeWidth, colornames.White, colornames.Green)
 
 	basicAtlas := text.NewAtlas(basicfont.Face7x13, text.ASCII)
 	basicTxt := text.New(pixel.V(5, winHeight-20), basicAtlas)
@@ -269,7 +269,7 @@ func newShaper(imd *imdraw.IMDraw, sPosX, sPosY float64, shapeColor, shapeBorder
 
 func (s *shaper) draw(win *pixelgl.Window) {
 	s.imd.Draw(win)
-	s.startPositionX = 5
+	s.startPositionX = shapeWidth
 	s.imd.Clear()
 }
 
@@ -291,10 +291,10 @@ func (s *shaper) drawShape(value int, targeted bool) {
 
 	if targeted {
 		s.imd.Color = colornames.Red
-		s.imd.Push(pixel.V(s.startPositionX+shapeWidth/2, float64(value)*shapeHeightRatio+5), pixel.V(s.startPositionX+shapeWidth/2, float64(value)*shapeHeightRatio+15))
+		s.imd.Push(pixel.V(s.startPositionX+shapeWidth/2, float64(value)*shapeHeightRatio+5), pixel.V(s.startPositionX+shapeWidth/2, float64(value)*shapeHeightRatio+2*shapeHeightRatio))
 		s.imd.Line(2)
-		s.imd.Push(pixel.V(s.startPositionX, float64(value)*shapeHeightRatio+8), pixel.V(s.startPositionX+shapeWidth/2, float64(value)*shapeHeightRatio+5))
-		s.imd.Push(pixel.V(s.startPositionX+shapeWidth, float64(value)*shapeHeightRatio+8), pixel.V(s.startPositionX+shapeWidth/2, float64(value)*shapeHeightRatio+5))
+		s.imd.Push(pixel.V(s.startPositionX, float64(value)*shapeHeightRatio+shapeHeightRatio), pixel.V(s.startPositionX+shapeWidth/2, float64(value)*shapeHeightRatio+5))
+		s.imd.Push(pixel.V(s.startPositionX+shapeWidth, float64(value)*shapeHeightRatio+shapeHeightRatio), pixel.V(s.startPositionX+shapeWidth/2, float64(value)*shapeHeightRatio+5))
 		s.imd.Line(2)
 	}
 
@@ -304,7 +304,27 @@ func (s *shaper) drawShape(value int, targeted bool) {
 var sortType = flag.String("sort", "quick", "[quick, bubble, selection, insertion, heap, shell, default]")
 var itemsCount = flag.Int("items", 100, "Items count")
 
-func main() {
+var shapeWidth = 5.
+var shapeHeightRatio = 5.
+
+func init() {
 	flag.Parse()
+	shapeWidth = float64(winWidth-(*itemsCount*shapePadding)) / float64(*itemsCount)
+	shapeHeightRatio = float64((winHeight - 100)) / float64(*itemsCount)
+}
+func main() {
+	switch *sortType {
+	case "quick":
+	case "bubble":
+	case "heap":
+	case "selection":
+	case "insertion":
+	case "shell":
+	case "default":
+	default:
+		flag.PrintDefaults()
+		os.Exit(1)
+	}
+
 	pixelgl.Run(run)
 }
